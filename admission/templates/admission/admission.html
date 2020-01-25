@@ -1,0 +1,8 @@
+{% extends 'admission/base.html' %}
+{% block method %}POST{% endblock %}
+{% block in_form %}
+	<h3>{% block headline %}{% endblock %}</h3>
+	{{ form }}
+    <input type="submit" name="done" value="SEND!">
+    {% csrf_token %}	
+{% endblock %}
