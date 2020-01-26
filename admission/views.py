@@ -1,8 +1,6 @@
 from .forms import RegistrationForm, EntranceForm
-#from django.core import signing
 from django.shortcuts import redirect, render
 from django.urls import reverse
-#from hashlib import md5
 from user.models import User
 from django.contrib.auth import authenticate, login
 import time
@@ -40,8 +38,7 @@ def choice(request):
 def start(request):
 	if request.user.is_anonymous:
 		return redirect('/admission')
-	else:
-		return redirect('/user/wall/' + str(request.user.id))
+	return redirect('/user/wall/' + str(request.user.id))
 
 def not_found(request):
 	if request.GET.get('return', None) == 'return':

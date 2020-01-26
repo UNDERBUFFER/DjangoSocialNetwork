@@ -6,5 +6,5 @@ urlpatterns = [
     path('', choice),
     path('/entrance', entrance, name='ent'),
     path('/registration', registration, name='reg'),
-    re_path(r'^.+$', not_found),
+    re_path(r'^.*$', not_found),
 ]

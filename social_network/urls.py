@@ -7,5 +7,5 @@ urlpatterns = [
     path('', start),
     path('admission', include('admission.urls')),
     path('user', include('user.urls')),
-    re_path(r'^.+$', not_found),
+    re_path(r'^.*$', not_found),
 ]
