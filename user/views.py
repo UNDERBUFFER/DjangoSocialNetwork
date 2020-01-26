@@ -3,12 +3,12 @@ from django.core.files import File
 from django.shortcuts import render
 from .models import User, Record, Photo
 
-def all_pages(request):
+def all_walls(request):
 	objects = User.objects.all()
 	objects = [(i.id, i.username) for i in objects]
-	return render(request, 'user/all_pages.html', context={'objects': objects})
+	return render(request, 'user/all_walls.html', context={'objects': objects})
 
-def page(request, iden):
+def wall(request, iden):
 	wall = 'other'
 	#obj_id = signing.loads(request.COOKIES['user']) if request.COOKIES.get('user', None) is not None else None
 	obj_id = None if request.user.is_anonymous else request.user.id

@@ -15,7 +15,7 @@ def registration(request):
 		if len(User.objects.filter(email=data['email'])) == 0:
 			obj = User.objects.create_user(username=data['username'], email=data['email'], password=data['password'])
 			login(request, obj)
-			response = redirect('/user/page/' + str(obj.id))
+			response = redirect('/user/wall/' + str(obj.id))
 	return response
 
 def entrance(request):
@@ -41,15 +41,9 @@ def start(request):
 	if request.user.is_anonymous:
 		return redirect('/admission')
 	else:
-		return redirect('/user/page/' + str(request.user.id))
-	#if None in [request.COOKIES.get(i, None) for i in ('user', 'is_authorized')]:
-	#	
-	#else:
-	#	obj = User.objects.get(id=signing.loads(request.COOKIES['user']))
-	#	return redirect('/user/page/' + str(obj.id))
+		return redirect('/user/wall/' + str(request.user.id))
 
-#def set_cookie(obj_id):
-#	response = redirect('/')
-#	response.set_cookie('is_authorized', True)
-#	response.set_cookie('user', signing.dumps(obj_id))
-#	return response
+def not_found(request):
+	if request.GET.get('return', None) == 'return':
+		return redirect('/')
+	return render(request, 'admission/not_found.html')
