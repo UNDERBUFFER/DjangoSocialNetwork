@@ -16,8 +16,10 @@ def create_response(request, temp, iden):
 
 def wall(request, iden):
 	wall = 'other'
-	obj_id = None if request.user.is_anonymous else request.user.id
-	obj = User.objects.get(id=obj_id) if obj_id is not None else None
+	try:
+		obj = User.objects.get(id=request.user.id)
+	except:
+		obj = None
 	if obj is not None:
 		if iden == obj.id:
 			wall = 'your'
