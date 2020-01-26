@@ -23,8 +23,8 @@ def wall(request, iden):
 	if obj is not None:
 		if iden == obj.id:
 			wall = 'your'
-			if request.POST.get('about', None) not in [None, '']:
-				Record.objects.create(author=obj, text=request.POST['about'])
+			if request.POST.get('text', None) not in [None, '']:
+				Record.objects.create(author=obj, text=request.POST['text'])
 			if request.FILES.get('file', None) is not None:
 				Photo.objects.create(author=obj, photo=File(request.FILES['file']))
 	if wall == 'your':
