@@ -1,0 +1,20 @@
+{% extends 'user/base.html' %}
+{% block in_body %}
+	<center><h3>WALL OF <b>{{ username }}</b>!</h3></center>
+	<center><h4>{% block whose %}{% endblock %}</h4></center><br />
+	<form method="GET">
+        <center>
+            <h3>GO TO PHOTOS!</h3>
+        </center>
+        <center>
+            <input type='submit' name='file' value='file'>
+        </center>
+        <br /><br />
+        <center>
+            <h3>GO TO RECORDS!</h3>
+        </center>
+        <center>
+            <input type="submit" name="text" value="text">
+        </center>
+    </form>
+{% endblock %}

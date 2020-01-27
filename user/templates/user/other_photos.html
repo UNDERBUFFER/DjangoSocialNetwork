@@ -1,0 +1,7 @@
+{% extends 'user/only_photos.html' %}
+{% block whose %}IT ARE OTHER PHOTOS!{% endblock %}
+{% block specifically %}
+    {% for photo in photos %}
+        <img src="/static/{{ photo }}" width="189" height="255">
+    {% endfor %}
+{% endblock %}
