@@ -3,7 +3,6 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from user.models import User
 from django.contrib.auth import authenticate, login
-import time
 
 def registration(request):
 	data = {i: request.POST.get(i, None) for i in ['username', 'password', 'email']}
