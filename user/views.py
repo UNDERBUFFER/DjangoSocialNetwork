@@ -1,6 +1,8 @@
-from django.core.files import File
-from django.shortcuts import render
 from .models import User, Record, Photo
+from django.core.files import File
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.urls import reverse
 
 def all_walls(request):
 	objects = User.objects.all()
@@ -15,6 +17,10 @@ def all_walls(request):
 #	return render(request, temp, context=context)
 
 def wall(request, iden):
+	if request.GET.get('file', None) is not None:
+		return redirect(reverse('photos', args=[iden]))
+	if request.GET.get('text', None) is not None:
+		return redirect(reverse('records', args=[iden]))
 	wall = 'other'
 	try:
 		obj = User.objects.get(id=request.user.id)
@@ -33,8 +39,8 @@ def wall(request, iden):
 	#	return create_response(request, 'user/your_wall.html', iden)
 	return create_response(request, 'user/other_wall.html', context={'username': username})
 
-def photos(request):
-	pass
+def photos(request, iden):
+	return HttpResponse('maybe photos')
 
-def records(request):
-	pass
+def records(request, iden):
+	return HttpResponse('maybe records')
