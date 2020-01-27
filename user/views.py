@@ -16,31 +16,56 @@ def all_walls(request):
 #	context['photos'] = [i.photo.name for i in Photo.objects.filter(author=iden)]
 #	return render(request, temp, context=context)
 
-def wall(request, iden):
-	if request.GET.get('file', None) is not None:
-		return redirect(reverse('photos', args=[iden]))
-	if request.GET.get('text', None) is not None:
-		return redirect(reverse('records', args=[iden]))
-	wall = 'other'
+def whose(request, iden):
+	this = 'other'
 	try:
 		obj = User.objects.get(id=request.user.id)
 	except:
 		obj = None
 	if obj is not None:
 		if iden == obj.id:
-			wall = 'your'
-	username = User.objects.get(id=iden).username
+			this = 'your'
+	return this
+
+def wall(request, iden):
+	if request.GET.get('file', None) is not None:
+		return redirect(reverse('photos', args=[iden]))
+	if request.GET.get('text', None) is not None:
+		return redirect(reverse('records', args=[iden]))
+	obj = User.objects.get(id=iden)
+	username = obj.username
 	#		if request.POST.get('text', None) not in [None, '']:
 	#			Record.objects.create(author=obj, text=request.POST['text'])
 	#		if request.FILES.get('file', None) is not None:
 	#			Photo.objects.create(author=obj, photo=File(request.FILES['file']))
-	if wall == 'your':
+	this = whose(request, iden)
+	if this == 'your':
 		return render(request, 'user/your_wall.html', context={'username': username})
 	#	return create_response(request, 'user/your_wall.html', iden)
-	return create_response(request, 'user/other_wall.html', context={'username': username})
+	return render(request, 'user/other_wall.html', context={'username': username})
 
 def photos(request, iden):
-	return HttpResponse('maybe photos')
+	obj = User.objects.get(id=iden)
+	username = obj.username
+	photos = [i.photo.name for i in Photo.objects.filter(author=iden)]
+	this = whose(request, iden)
+	if this == 'your':
+		if request.FILES.get('file', None) is not None:
+			Photo.objects.create(author=obj, photo=File(request.FILES['file']))
+			photos = [i.photo.name for i in Photo.objects.filter(author=iden)]
+		return render(request, 'user/your_photos.html', context={'username': username, 'photos': photos})
+	#	return create_response(request, 'user/your_wall.html', iden)
+	return render(request, 'user/other_photos.html', context={'username': username, 'photos': photos})
 
 def records(request, iden):
-	return HttpResponse('maybe records')
+	obj = User.objects.get(id=iden)
+	username = obj.username
+	records = [i.text for i in Record.objects.filter(author=iden)]
+	this = whose(request, iden)
+	if this == 'your':
+		if request.POST.get('text', None) not in [None, '']:
+			Record.objects.create(author=obj, text=request.POST['text'])
+			records = [i.text for i in Record.objects.filter(author=iden)]
+		return render(request, 'user/your_records.html', context={'username': username, 'records': records})
+	#	return create_response(request, 'user/your_wall.html', iden)
+	return render(request, 'user/other_records.html', context={'username': username, 'recordss': records})

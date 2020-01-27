@@ -1,4 +1,6 @@
 {% extends 'user/base.html' %}
+{% block in_body %}
 <center><h3>PHOTOS OF <b>{{ username }}</b>!</h3></center>
 <center><h4>{% block whose %}{% endblock %}</h4></center><br />
 {% block specifically %}{% endblock %}
+{% endblock %}
