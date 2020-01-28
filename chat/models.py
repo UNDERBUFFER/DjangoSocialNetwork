@@ -8,3 +8,7 @@ class Message(models.Model):
         return obj
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
+
+class Ignore(models.Model):
+    who = models.ForeignKey(User, on_delete=models.CASCADE, related_name='who')
+    whom = models.ForeignKey(User, on_delete=models.CASCADE, related_name='whom')
