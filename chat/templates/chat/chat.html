@@ -7,6 +7,6 @@
         {% csrf_token %}
     </form>
     {% for message in messages %}
-        <center>{{ message }}</center></br>
+        <center>{{ message.author.username }}: {{ message.text }}</center></br>
     {% endfor %}
 {% endblock %}
