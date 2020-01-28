@@ -2,13 +2,11 @@
 {% block where %}THESE ARE YOUR SETTINGS{% endblock %}
 {% block specifically %}
 <form method='POST'>
-    ID OF THE PERSON YOU WANT TO BLOCK
     <center>
 		<h3>ID OF THE PERSON YOU WANT TO BLOCK</h3>
-	</center>
-	<center>
-		<input type="submit" name="whom" value="submit">
-	</center>
+    </center>
+    <center><input type='text' name='text'></center>
+	<center><input type="submit" name="whom" value="submit"></center>
     {% csrf_token %}
 </form>
 {% endblock %}

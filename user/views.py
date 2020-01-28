@@ -1,3 +1,4 @@
+from .functions import whose
 from .models import User, Record, Photo
 from django.core.files import File
 from django.shortcuts import redirect, render
@@ -8,22 +9,13 @@ def all_walls(request):
 	objects = [(i.id, i.username) for i in objects]
 	return render(request, 'user/all_walls.html', context={'objects': objects})
 
-def whose(request, iden):
-	this = 'other'
-	try:
-		obj = User.objects.get(id=request.user.id)
-	except:
-		obj = None
-	if obj is not None:
-		if iden == obj.id:
-			this = 'your'
-	return this
-
 def wall(request, iden):
 	if request.GET.get('file', None) is not None:
 		return redirect(reverse('photos', args=[iden]))
 	if request.GET.get('text', None) is not None:
 		return redirect(reverse('records', args=[iden]))
+	if request.GET.get('chat', None) is not None:
+		return redirect('/chat/chat')
 	obj = User.objects.get(id=iden)
 	username = obj.username
 	this = whose(request, iden)
