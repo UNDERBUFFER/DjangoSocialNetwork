@@ -9,4 +9,7 @@
 			<center><input type="submit" name="done" value="submit"></center>
 		{% csrf_token %}
 	</form>
+	{% for ignore in ignores %}
+        <center>YOU BLOCKED {{ ignore.whom.username }} with id {{ ignore.whom.id }}</center></br>
+    {% endfor %}
 {% endblock %}
