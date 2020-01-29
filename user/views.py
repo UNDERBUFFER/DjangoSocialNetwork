@@ -45,4 +45,4 @@ def records(request, iden):
 			Record.objects.create(author=obj, text=request.POST['text'])
 			records = [i.text for i in Record.objects.filter(author=iden)]
 		return render(request, 'user/your_records.html', context={'username': username, 'records': records})
-	return render(request, 'user/other_records.html', context={'username': username, 'records': records}) #test
+	return render(request, 'user/other_records.html', context={'username': username, 'records': records})
