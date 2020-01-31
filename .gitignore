@@ -1,4 +1,4 @@
-user/static/user/*/photos
+/user/static/user/*/photos
 */__pycache__
 *.pyc
 db.sqlite3
