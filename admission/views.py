@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login
 def registration(request):
 	data = {i: request.POST.get(i, None) for i in ['username', 'password', 'email']}
 	form = RegistrationForm()
+	for i in ['email', 'password', 'username']:
+		form.fields[i].widget.attrs["value"] = request.POST.get(i, '')
 	response = render(request, 'admission/registration.html', context={'form': form})
 	if None not in data.values():
 		if len(User.objects.filter(email=data['email'])) == 0:
@@ -18,6 +20,8 @@ def registration(request):
 def entrance(request):
 	data = {i: request.POST.get(i, None) for i in ['password', 'email']}
 	form = EntranceForm()
+	for i in ['email', 'password']:
+		form.fields[i].widget.attrs["value"] = request.POST.get(i, '')
 	response = render(request, 'admission/entrance.html', context={'form': form})
 	if None not in data.values():
 		obj = authenticate(email=data['email'], password=data['password'])
