@@ -8,5 +8,6 @@ urlpatterns = [
     path('admission', include('admission.urls')),
     path('user', include('user.urls')),
     path('chat', include('chat.urls')),
+    path('rest', include('rest.urls')),
     re_path(r'^.*$', not_found),
 ]
