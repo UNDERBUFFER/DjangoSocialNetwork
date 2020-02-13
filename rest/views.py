@@ -6,22 +6,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from user.models import User
 
-#class View(CreateAPIView):
-#    serializer_class = UserSerializer
-#    def post(self, request):
-#        print(request.data)
-#        return super().post(request)
-
 class ViewOneObject(APIView):
+    serializer_class = UserSerializer
     def get(self, request, iden):
         try:
             obj = UserSerializer(Backend().get_user(iden))
         except:
-            return redirect('/rest/create')
+            pass
         return Response(obj.data)
-
-class ViewCreateObject(CreateAPIView):
-    serializer_class = UserSerializer
-    def post(self, request, *args, **kwargs):
-        super().post(request, *args, **kwargs)
+    def post(self, request, iden):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
         return redirect('/rest/{}'.format(User.objects.last().id))
