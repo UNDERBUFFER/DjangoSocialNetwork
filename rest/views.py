@@ -1,18 +1,29 @@
-from .serializers import CreateSerializer, ViewSerializer
+from .serializers import GetPostRecordSerializer, GetUserSerializer, PostUserSerializer
 from django.shortcuts import redirect, render
-from rest_framework.generics import GenericAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from user.models import User
+from user.models import Record, User
 
-class CreateOneObject(CreateAPIView):
-    serializer_class = CreateSerializer
+class PostUser(CreateAPIView):
+    serializer_class = PostUserSerializer
     def post(self, request):
         old = super().post(request)
         data = {'detail': 'user is on rest/{}'.format(User.objects.get(email=old.data["email"]).id)}
         return Response(data)
 
-class ViewOneObject(RetrieveUpdateDestroyAPIView):
-    serializer_class = ViewSerializer
+class GetUser(RetrieveUpdateDestroyAPIView):
+    serializer_class = GetUserSerializer
     queryset = User.objects.all()
     lookup_field = 'id'
+
+class GetPostRecord(ListCreateAPIView):
+    serializer_class = GetPostRecordSerializer
+    def get(self, request, *args, **kwargs):
+        self.queryset = Record.objects.filter(author_id=kwargs['author_id'])
+        return super().get(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        s = GetPostRecordSerializer(data=request.data)
+        if s.is_valid():
+            s.save(author=User.objects.get(id=kwargs['author_id']))
+        return Response(s.data)
