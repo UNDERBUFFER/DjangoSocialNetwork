@@ -5,7 +5,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from user.models import Record, User
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 class PostUser(CreateAPIView):
     serializer_class = PostUserSerializer
@@ -39,7 +39,7 @@ class AuthView(GenericAPIView):
         return Response({'token': token.key})
 
 class Home(GenericAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         ser = GetUserSerializer(request.user)
         return Response(ser.data)

@@ -7,5 +7,4 @@ urlpatterns = [
     path('/creation', PostUser.as_view()),
     path('/auth', AuthView.as_view()),
     path('/home', Home.as_view()),
-    #path('/auth', login),
 ]
