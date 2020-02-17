@@ -1,9 +1,11 @@
 from .serializers import GetPostRecordSerializer, GetUserSerializer, PostUserSerializer
+from admission.backend import Backend
 from django.shortcuts import redirect, render
+from rest_framework.authtoken.models import Token
 from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from user.models import Record, User
+from rest_framework.permissions import AllowAny
 
 class PostUser(CreateAPIView):
     serializer_class = PostUserSerializer
@@ -27,3 +29,17 @@ class GetPostRecord(ListCreateAPIView):
         if s.is_valid():
             s.save(author=User.objects.get(id=kwargs['author_id']))
         return Response(s.data)
+
+class AuthView(GenericAPIView):
+    serializer_class = PostUserSerializer
+    permission_classes = [AllowAny]
+    def post(self, request):
+        user = Backend().authenticate(email=request.data['email'], password=request.data['password'])
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({'token': token.key})
+
+class Home(GenericAPIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        ser = GetUserSerializer(request.user)
+        return Response(ser.data)
