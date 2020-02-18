@@ -1,12 +1,12 @@
-from .functions import access, correct_messages
 from .models import Message, Ignore
+from .utils import correct_messages
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from user.models import User
 
+@user_passes_test(lambda user: False if user.is_anonymous else True, login_url='/')
 def chat(request):
-    if (res := access(request)) is not True:
-        return res
     who = request.user
     messages = Message.objects.all()
     if request.POST.get('text', None) not in [None, '']:
@@ -16,9 +16,8 @@ def chat(request):
     mess = correct_messages(ignores, messages)[-8:]
     return render(request, 'chat/chat.html', context={'username': who.username, 'messages': mess})
 
+@user_passes_test(lambda user: False if user.is_anonymous else True, login_url='/')
 def settings(request):
-    if (res := access(request)) is not True:
-        return res 
     who = request.user
     if request.POST.get('whom', None) not in [None, '']:
         whom = User.objects.get(id=request.POST['whom'])

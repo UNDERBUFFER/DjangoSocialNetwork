@@ -1,9 +1,11 @@
 from .forms import RegistrationForm, EntranceForm
+from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from user.models import User
 from django.contrib.auth import authenticate, login
 
+@user_passes_test(lambda user: True if user.is_anonymous else False, login_url='/')
 def registration(request):
 	data = {i: request.POST.get(i, None) for i in ['username', 'password', 'email']}
 	form = RegistrationForm()
@@ -17,6 +19,7 @@ def registration(request):
 			response = redirect('/user/wall/' + str(obj.id))
 	return response
 
+@user_passes_test(lambda user: True if user.is_anonymous else False, login_url='/')
 def entrance(request):
 	data = {i: request.POST.get(i, None) for i in ['password', 'email']}
 	form = EntranceForm()
@@ -30,6 +33,7 @@ def entrance(request):
 			response = redirect('/')
 	return response
 
+@user_passes_test(lambda user: True if user.is_anonymous else False, login_url='/')
 def choice(request):
 	if request.GET.get("choice", None) == "registration":
 		return redirect(reverse('reg'))

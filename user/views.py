@@ -1,5 +1,5 @@
-from .functions import whose
 from .models import User, Record, Photo
+from .utils import whose
 from django.core.files import File
 from django.shortcuts import redirect, render
 from django.urls import reverse
