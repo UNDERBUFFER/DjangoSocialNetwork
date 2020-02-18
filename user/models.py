@@ -1,5 +1,6 @@
 import datetime
 import os
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.db import models
 
@@ -28,6 +29,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 	last_login = models.DateTimeField(default=datetime.datetime.now)
 	date_joined = models.DateTimeField(default=datetime.datetime.now)
 	objects = MyUserManager()
+	def __setattr__(self, name, value):
+		if name == 'password':
+			if not value.startswith('pbkdf2_sha256'):
+				value = make_password(value)
+		return super().__setattr__(name, value)
 
 class Record(models.Model):
 	author = models.ForeignKey(User, on_delete=models.CASCADE)

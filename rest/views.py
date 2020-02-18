@@ -1,45 +1,49 @@
-from .serializers import GetPostRecordSerializer, GetUserSerializer, PostUserSerializer
+from . import serializers
 from admission.backend import Backend
 from django.shortcuts import redirect, render
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
-from user.models import Record, User
+from user import models
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
-class PostUser(CreateAPIView):
-    serializer_class = PostUserSerializer
-    def post(self, request):
-        old = super().post(request)
-        data = {'detail': 'user is on rest/{}'.format(User.objects.get(email=old.data["email"]).id)}
-        return Response(data)
-
-class GetUser(RetrieveUpdateDestroyAPIView):
-    serializer_class = GetUserSerializer
-    queryset = User.objects.all()
-    lookup_field = 'id'
-
-class GetPostRecord(ListCreateAPIView):
-    serializer_class = GetPostRecordSerializer
-    def get(self, request, *args, **kwargs):
-        self.queryset = Record.objects.filter(author_id=kwargs['author_id'])
-        return super().get(request, *args, **kwargs)
+class Admission(CreateAPIView):
+    serializer_class = serializers.POSTAdmission
+    act = None
     def post(self, request, *args, **kwargs):
-        s = GetPostRecordSerializer(data=request.data)
-        if s.is_valid():
-            s.save(author=User.objects.get(id=kwargs['author_id']))
-        return Response(s.data)
-
-class AuthView(GenericAPIView):
-    serializer_class = PostUserSerializer
-    permission_classes = [AllowAny]
-    def post(self, request):
-        user = Backend().authenticate(email=request.data['email'], password=request.data['password'])
+        if self.act == 'registration':
+            data = super().post(request, *args, **kwargs).data
+            system = True
+        else:
+            data = request.data
+            system = False
+        if (user := Backend().authenticate(email=data['email'], password=data['password'], system=system)) is None:
+            return Response()
         token, _ = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
 
-class Home(GenericAPIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        ser = GetUserSerializer(request.user)
-        return Response(ser.data)
+class User(RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.GETUser
+    queryset = models.User.objects.all()
+    lookup_field = 'id'
+    def get(self, request, *args, **kwargs):
+        if kwargs['id'] == request.user.id:
+            self.serializer_class = serializers.GETPUTDELETEUser
+            response = super().get(request, *args, **kwargs)
+            response.data['password'] = ''
+            return response
+        return super().get(request, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        if kwargs['id'] == request.user.id:
+            self.serializer_class = serializers.GETPUTDELETEUser
+            response = super().put(request, *args, **kwargs)
+            response.data['password'] = ''
+            return response
+        return super().get(request, *args, **kwargs)
+    def delete(self, request, *args, **kwargs):
+        if kwargs['id'] == request.user.id:
+            self.serializer_class = serializers.GETPUTDELETEUser
+            response = super().delete(request, *args, **kwargs)
+            response.data['password'] = ''
+            return response 
+        return super().get(request, *args, **kwargs)

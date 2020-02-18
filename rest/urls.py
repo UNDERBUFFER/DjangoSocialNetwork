@@ -1,10 +1,12 @@
-from .views import AuthView, GetPostRecord, GetUser, PostUser, Home
+from .views import *
 from django.urls import path, re_path
 
 urlpatterns = [
-    path('/<int:id>', GetUser.as_view()),
-    path('/<int:author_id>/records', GetPostRecord.as_view()),
-    path('/creation', PostUser.as_view()),
-    path('/auth', AuthView.as_view()),
-    path('/home', Home.as_view()),
+    path('/admission/registration', Admission.as_view(act='registration')),
+    path('/admission/entrance', Admission.as_view(act='entrance')),
+    path('/user/<int:id>', User.as_view()),
+    path('/user/<int:id>/records', lambda: None),
+    path('/user/<int:id>/photos', lambda: None),
+    path('/chat/chat', lambda: None),
+    path('/chat/settings', lambda: None),
 ]

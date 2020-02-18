@@ -1,17 +1,17 @@
 from rest_framework import serializers
 from user.models import Record, User
 
-class PostUserSerializer(serializers.ModelSerializer):
+class POSTAdmission(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
 
-class GetUserSerializer(serializers.ModelSerializer):
+class GETUser(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username']
 
-class GetPostRecordSerializer(serializers.ModelSerializer):
+class GETPUTDELETEUser(serializers.ModelSerializer):
     class Meta:
-        model = Record
-        fields = ['text']
+        model = User
+        fields = ['username', 'email', 'password']
