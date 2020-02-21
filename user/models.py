@@ -40,7 +40,7 @@ class Record(models.Model):
 	text = models.TextField()
 
 class Photo(models.Model):
-	def correct_dir(instance, filename):
+	def correct_dir(self, filename):
 		if os.getcwd().endswith('social_network'):
 			os.chdir('./user/static')
 		return './user/{0}/photos/{1}'.format(instance.author.id, filename)

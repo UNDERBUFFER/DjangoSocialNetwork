@@ -15,3 +15,13 @@ class GETPUTDELETEUser(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
+class GETRecord(serializers.ModelSerializer):
+    class Meta:
+        model = Record
+        fields = ['text']
+
+class GETPOSTRecord(serializers.ModelSerializer):
+    class Meta:
+        model = Record
+        fields = ['text']

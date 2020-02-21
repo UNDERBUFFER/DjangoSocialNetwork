@@ -47,3 +47,16 @@ class User(RetrieveUpdateDestroyAPIView):
             response.data['password'] = ''
             return response 
         return super().get(request, *args, **kwargs)
+
+class Record(ListCreateAPIView):
+    serializer_class = serializers.GETRecord
+    queryset = models.Record.objects.all()
+    permission_class = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        self.queryset = models.Record.objects.filter(author_id=kwargs['author_id'])
+        return super().get(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        if kwargs['author_id'] == request.user.id:
+            self.serializer_class = serializers.GETPOSTRecord
+            return Response({"text": models.Record.objects.create(text=request.data['text'], author=request.user).text})
+        return super().get(request, *args, **kwargs)
