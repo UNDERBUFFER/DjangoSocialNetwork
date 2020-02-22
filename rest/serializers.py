@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user.models import Record, User
+from user.models import *
 
 class POSTAdmission(serializers.ModelSerializer):
     class Meta:
@@ -16,12 +16,12 @@ class GETPUTDELETEUser(serializers.ModelSerializer):
         model = User
         fields = ['username', 'email', 'password']
 
-class GETRecord(serializers.ModelSerializer):
-    class Meta:
-        model = Record
-        fields = ['text']
-
 class GETPOSTRecord(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields = ['text']
+
+class GETPOSTPhoto(serializers.ModelSerializer):
+    class Meta:
+        model = Photo
+        fields = ['photo']

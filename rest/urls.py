@@ -6,7 +6,7 @@ urlpatterns = [
     path('/admission/entrance', Admission.as_view(act='entrance')),
     path('/user/<int:id>', User.as_view()),
     path('/user/<int:author_id>/records', Record.as_view()),
-    path('/user/<int:id>/photos', lambda: None),
+    path('/user/<int:author_id>/photos', Photo.as_view()),
     path('/chat/chat', lambda: None),
     path('/chat/settings', lambda: None),
 ]
