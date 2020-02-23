@@ -1,5 +1,3 @@
-from django.shortcuts import redirect
-
 def correct_messages(ignores, messages):
 	mess = []
 	for message in messages:

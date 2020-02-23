@@ -3,8 +3,9 @@ from user.models import Record, User
 
 class MyMessageManager(models.Manager):
     def create(self, **kwargs):
-        super().create(**kwargs)
+        message = super().create(**kwargs)
         Record.objects.create(**kwargs)
+        return message
 
 class Message(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -13,4 +14,4 @@ class Message(models.Model):
 
 class Ignore(models.Model):
     who = models.ForeignKey(User, on_delete=models.CASCADE, related_name='who')
-    whom = models.ForeignKey(User, on_delete=models.CASCADE, related_name='whom')
+    whom = models.ForeignKey(User, on_delete=models.CASCADE, related_name='whom', unique=True)

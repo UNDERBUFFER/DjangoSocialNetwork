@@ -1,8 +1,8 @@
-from .views import chat, settings
+from .views import *
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path
 
 urlpatterns = [
-    path('/chat', chat, name='chat'),
-    path('/settings', settings, name='set'),
+    path('/chat', Message.as_view()),
+    path('/ignore', Ignore.as_view()),
 ]
