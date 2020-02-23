@@ -5,8 +5,10 @@ class Backend(BaseBackend):
 	def authenticate(self, request=None, username=None, email=None, password=None, system=False):
 		if [password, email].count(None) != 0:
 			return None
-		scope = locals()	
+		scope = locals()
 		data = {i: eval(i, scope) for i in ['username', 'email', 'password'] if eval(i, scope) is not None}
+		if data.get('username') == '':
+			data.pop('username')
 		try:
 			password = data.pop('password')
 			user = User.objects.get(**data)

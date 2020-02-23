@@ -7,7 +7,7 @@ from django.db import models
 class MyUserManager(UserManager):
 	def create(self, **kwargs):
 		user = super().create(**kwargs)
-		user.set_password(user.password)
+		user.__setattr__('password', user.password)
 		user.save()
 		return user
 	def get(self, **kwargs):
