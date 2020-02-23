@@ -1,10 +1,7 @@
 # DjangoSocialNetwork
-Social network on Pyhon/Django
+Social network on Pyhon/Django 
 
 1. git clone https://github.com/DolphinHMPY/DjangoSocialNetwork.git
-2. DjangoSocialNetwork/user/models.py:
-   if os.getcwd().endswith('social_network'):
-       ...
-   ->
-   if os.getcwd().endswith('DjangoSocialNetwork'):
-       ...
+2. you should change the paths for yourself:
+    /social_network/social_network/settings.py - MEDIA_ROOT = ...
+    /user/models.py - Photo.correct_dir() -> ...
