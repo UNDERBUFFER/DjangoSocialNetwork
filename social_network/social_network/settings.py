@@ -128,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = '/mnt/c/Django/social_network/user/static/user/'
+MEDIA_ROOT = '/mnt/c/Django/DjangoSocialNetwork/social_network/user/static/user/'
 
 MEDIA_URL = '/user/'
 

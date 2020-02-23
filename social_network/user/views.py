@@ -51,10 +51,7 @@ class Photo(ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         data = []
         for i in response.data:
-            #data.append({'photo': i['photo'].replace('/photos/mnt/c/Django/social_network/user/static', '')})
-            data.append({'photo': i['photo'].replace('/mnt/c/Django/social_network/user/static/user', '')})
-            #"http://localhost:8000/user/mnt/c/Django/social_network/user/static/user/1/photos/C30cVgDA5XI.jpg"
-            #data.append({'photo': i['photo']})
+            data.append({'photo': i['photo'].replace('/mnt/c/Django/DjangoSocialNetwork/social_network/user/static/user', '')})
         response.data = data
         return response
     def post(self, request, *args, **kwargs):
