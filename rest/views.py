@@ -6,22 +6,6 @@ from rest_framework.generics import GenericAPIView, ListAPIView, ListCreateAPIVi
 from rest_framework.response import Response
 from user import models
 from rest_framework.permissions import AllowAny, IsAuthenticated
-
-class Admission(CreateAPIView):
-    serializer_class = serializers.POSTAdmission
-    act = None
-    def post(self, request, *args, **kwargs):
-        if self.act == 'registration':
-            data = super().post(request, *args, **kwargs).data
-            system = True
-        else:
-            data = request.data
-            system = False
-        if (user := Backend().authenticate(email=data['email'], password=data['password'], system=system)) is None:
-            return Response()
-        token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
-
 class User(RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.GETUser
     queryset = models.User.objects.all()

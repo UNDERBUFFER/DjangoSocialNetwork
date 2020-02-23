@@ -129,6 +129,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = '/mnt/c/Django/social_network/user/static/user/'
+
+MEDIA_URL = '/user/'
+
 AUTH_USER_MODEL = 'user.User'
 
 AUTHENTICATION_BACKENDS = ['admission.backend.Backend']
@@ -137,7 +141,4 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
-    #'DEFAULT_PERMISSION_CLASSES': [
-    #    'rest_framework.permissions.IsAuthenticated',
-    #],
 }

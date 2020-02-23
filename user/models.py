@@ -41,7 +41,6 @@ class Record(models.Model):
 
 class Photo(models.Model):
 	def correct_dir(self, filename):
-		os.chdir('/mnt/c/Django/social_network/user/static')
-		return './user/{0}/photos/{1}'.format(self.author.id, filename)
+		return '/mnt/c/Django/social_network/user/static/user/{0}/photos/{1}'.format(self.author.id, filename)
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
 	photo = models.ImageField(upload_to=correct_dir)
