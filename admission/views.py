@@ -13,7 +13,6 @@ class Admission(CreateAPIView):
             system = True
         else:
             data = request.data
-            print(data)
             system = False
         if (user := authenticate(email=data['email'], password=data['password'], system=system)) is None:
             return Response()

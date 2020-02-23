@@ -1,37 +1,37 @@
-from . import serializers
+from .serializers import *
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from user import models
 
 class User(RetrieveUpdateDestroyAPIView):
-    serializer_class = serializers.GETUser
+    serializer_class = GETUser
     queryset = models.User.objects.all()
     lookup_field = 'id'
     def get(self, request, *args, **kwargs):
         if kwargs['id'] == request.user.id:
-            self.serializer_class = serializers.GETPUTDELETEUser
+            self.serializer_class = GETPUTDELETEUser
             response = super().get(request, *args, **kwargs)
             response.data['password'] = ''
             return response
         return super().get(request, *args, **kwargs)
     def put(self, request, *args, **kwargs):
         if kwargs['id'] == request.user.id:
-            self.serializer_class = serializers.GETPUTDELETEUser
+            self.serializer_class = GETPUTDELETEUser
             response = super().put(request, *args, **kwargs)
             response.data['password'] = ''
             return response
         return super().get(request, *args, **kwargs)
     def delete(self, request, *args, **kwargs):
         if kwargs['id'] == request.user.id:
-            self.serializer_class = serializers.GETPUTDELETEUser
+            self.serializer_class = GETPUTDELETEUser
             response = super().delete(request, *args, **kwargs)
             response.data['password'] = ''
             return response 
         return super().get(request, *args, **kwargs)
 
 class Record(ListCreateAPIView):
-    serializer_class = serializers.GETPOSTRecord
+    serializer_class = GETPOSTRecord
     queryset = models.Record.objects.all()
     permission_class = [IsAuthenticated]
     def get(self, request, *args, **kwargs):
@@ -43,7 +43,7 @@ class Record(ListCreateAPIView):
         return super().get(request, *args, **kwargs)
 
 class Photo(ListCreateAPIView):
-    serializer_class = serializers.GETPOSTPhoto
+    serializer_class = GETPOSTPhoto
     queryset = models.Photo.objects.all()
     permission_class = [IsAuthenticated]
     def get(self, request, *args, **kwargs):

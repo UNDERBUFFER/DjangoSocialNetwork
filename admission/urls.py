@@ -1,6 +1,5 @@
 from .views import *
-from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path
 
 urlpatterns = [
     path('/registration', Admission.as_view(act='registration')),

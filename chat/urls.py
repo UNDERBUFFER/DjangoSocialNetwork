@@ -1,4 +1,4 @@
-from .views import *
+from .views import Message, Ignore
 from django.contrib import admin
 from django.urls import path
 
