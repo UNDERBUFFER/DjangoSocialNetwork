@@ -14,7 +14,11 @@ class Admission(CreateAPIView):
         else:
             data = request.data
             system = False
-        if (user := authenticate(email=data['email'], password=data['password'], system=system)) is None:
+        try:
+            if (user := authenticate(email=data['email'], password=data['password'], system=system)) is None:
+                return Response()
+        except:
             return Response()
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key})
+        url = '/user/{}'.format(user.id)
+        return Response({'token': token.key, 'url': url})

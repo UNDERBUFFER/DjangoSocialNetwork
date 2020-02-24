@@ -1,0 +1,12 @@
+{% extends 'chat/post.html' %}
+{% block where %}THIS IS YOUR COMMUNICATION{% endblock %}
+{% block specifically %}
+    <form method="POST">
+        <center><input type='text' name='text'></center>
+        <center><input type='submit' name='done' value="submit"></center>
+        {% csrf_token %}
+    </form>
+    {% for message in messages %}
+        <center>{{ message.author.username }}: {{ message.text }}</center></br>
+    {% endfor %}
+{% endblock %}

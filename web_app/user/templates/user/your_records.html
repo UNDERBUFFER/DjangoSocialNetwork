@@ -1,0 +1,12 @@
+{% extends 'user/only_records.html' %}
+{% block whose %}THESE ARE YOUR RECORDS!{% endblock %}
+{% block specifically %}
+    <form method="POST">
+        <center><input type='text' name='text'></center>
+        <center><input type='submit' name='done' value="submit"></center>
+        {% csrf_token %}
+    </form>
+    {% for record in records %}
+        <center>{{ record }}</center></br>
+    {% endfor %}
+{% endblock %}

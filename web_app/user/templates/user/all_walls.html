@@ -1,0 +1,6 @@
+{% extends 'user/base.html' %}
+{% block in_body %}
+    {% for object in objects %}
+        <center>/page/{{ object.0 }} of {{ object.1 }}</center>
+    {% endfor %}
+{% endblock %}
