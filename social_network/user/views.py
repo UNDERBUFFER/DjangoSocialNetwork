@@ -36,11 +36,15 @@ class Record(ListCreateAPIView):
     permission_class = [IsAuthenticated]
     def get(self, request, *args, **kwargs):
         self.queryset = models.Record.objects.filter(author_id=kwargs['author_id'])
-        return super().get(request, *args, **kwargs)
+        response = super().get(request, *args, **kwargs)
+        response.data.append({'Authorization': True if kwargs['author_id'] == request.user.id else False})
+        return response
     def post(self, request, *args, **kwargs):
         if kwargs['author_id'] == request.user.id:
-            return Response({"text": models.Record.objects.create(text=request.data['text'], author=request.user).text})
-        return super().get(request, *args, **kwargs)
+            return Response([{"text": models.Record.objects.create(text=request.data['text'], author=request.user).text}, {'Authorization': True}])
+        response = super().get(request, *args, **kwargs)
+        response.data.append({'Authorization': False})
+        return response
 
 class Photo(ListCreateAPIView):
     serializer_class = GETPOSTPhoto
@@ -53,10 +57,13 @@ class Photo(ListCreateAPIView):
         for i in response.data:
             data.append({'photo': i['photo'].replace('/mnt/c/Django/DjangoSocialNetwork/social_network/user/static/user', '')})
         response.data = data
+        response.data.append({'Authorization': True if kwargs['author_id'] == request.user.id else False})
         return response
     def post(self, request, *args, **kwargs):
         if kwargs['author_id'] == request.user.id:
             photo =  models.Photo.objects.create(photo=request.data['photo'], author=request.user).photo.name
             photo = photo[photo.rfind('/'):]
-            return Response({"photo": request.build_absolute_uri() + photo})
-        return super().get(request, *args, **kwargs)
+            return Response([{"photo": request.build_absolute_uri() + photo}, {'Authorization': True}])
+        response = super().get(request, *args, **kwargs)
+        response.data.append({'Authorization': False})
+        return response

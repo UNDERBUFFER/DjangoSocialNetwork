@@ -1,2 +1,5 @@
-{% extends 'user/only_wall.html' %}
-{% block whose %}IT IS OTHER WALL!{% endblock %}
+{% extends 'user/base.html' %}
+{% block in_body %}
+    <center><h3>{{ username }}</h3></center>
+    <center><h4>{% block whose %}IT IS OTHER WALL!{% endblock %}</h4></center><br />
+{% endblock %}

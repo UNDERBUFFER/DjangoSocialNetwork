@@ -2,6 +2,6 @@
 {% block whose %}THESE ARE OTHER PHOTOS!{% endblock %}
 {% block specifically %}
     {% for photo in photos %}
-        <img src="/static/{{ photo }}" width="189" height="255">
+        <img src="{{ photo }}" width="189" height="255">
     {% endfor %}
 {% endblock %}
