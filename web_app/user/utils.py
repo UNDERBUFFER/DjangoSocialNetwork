@@ -21,15 +21,3 @@ def access_request(request, url):
     except:
         return (False, rest)
     return (True, rest)
-
-def list_data_request(request, url):
-    session = requests.session()
-    try:
-        token = request.COOKIES.get('Authorization', '')
-        rest = json.loads(session.get(url, headers={'Authorization': token}).text)
-
-        #if list(rest.keys()) == ['username']:
-        #    raise AcessException()
-    except:
-        return (False, rest)
-    return (True, rest)

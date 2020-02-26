@@ -2,6 +2,6 @@ from .views import *
 from django.urls import path
 
 urlpatterns = [
-    path('/chat', lambda: None),
-    path('/ignore', lambda: None),
+    path('/chat', Message.as_view()),
+    path('/ignore', Ignore.as_view()),
 ]
