@@ -18,6 +18,11 @@ class Message(View):
 
 class Ignore(View):
     def get(self, request, *args, **kwargs):
-        return HttpResponse('GET request!')
+        if (res := access_request(request, 'http://localhost:8080/chat/ignore')) is False:
+            return redirect('http://localhost:8000/admission/entrance')
+        return render(request, 'chat/ignore.html', context={'ignores': [{j: i[j] for j in i} for i in res[1]]})
     def post(self, request, *args, **kwargs):
-        return HttpResponse('POST request!')
+        if (res := access_request(request, 'http://localhost:8080/chat/ignore')) is False:
+            return self.get(request, *args, **kwargs)
+        requests.post('http://localhost:8080/chat/ignore', data={'whom': request.POST['whom']}, headers={'Authorization': request.COOKIES['Authorization']})
+        return self.get(request, *args, **kwargs)

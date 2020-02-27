@@ -4,10 +4,11 @@ from chat import models
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from user.models import User
 
 class Message(ListCreateAPIView):
     serializer_class = POSTMessage
-    queryset = Message.objects.all()
+    queryset = models.Message.objects.all()
     permission_classes = [IsAuthenticated]
     def get(self, request, *args, **kwargs):
         self.queryset = correct_messages(models.Ignore.objects.filter(who=request.user), models.Message.objects.all())[-8:]
@@ -19,9 +20,16 @@ class Message(ListCreateAPIView):
 
 class Ignore(ListCreateAPIView):
     serializer_class = GETPOSTIgnore
-    queryset= Ignore.objects.all()
+    queryset = models.Ignore.objects.all()
     permission_classes = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        self.queryset= models.Ignore.objects.filter(who=request.user)
+        return super().get(request, *args, **kwargs)
     def post(self, request, *args, **kwargs):
-        if int(request.data['whom']) != request.user.id:
-            return Response({"whom": models.Ignore.objects.create(who=request.user, whom=User.objects.get(id=request.data['whom'])).id})
-        return Response()
+        try:
+            if int(request.data['whom']) != request.user.id:
+                if len(models.Ignore.objects.filter(who=request.user, whom=User.objects.get(id=int(request.data['whom'])))) == 0:
+                    return Response({"whom": models.Ignore.objects.create(who=request.user, whom=User.objects.get(id=request.data['whom'])).whom.id})
+            return Response()
+        except:
+            return Response()

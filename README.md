@@ -7,3 +7,5 @@ Social network on Pyhon/Django
     ./DjangoSocialNetwork/social_network/user/models.py - Photo.correct_dir() -> ...
     ./DjangoSocialNetwork/social_network/user/views.py Photo.get .replace(...)
 3. python ./DjangoSocialNetwork/social_network/manage.py migrate
+4. python ./DjangoSocialNetwork/social_network/manage.py runserver 8080
+5. python ./DjangoSocialNetwork/web_app/manage.py runserver 8000

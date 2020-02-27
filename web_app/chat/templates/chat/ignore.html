@@ -10,6 +10,6 @@
 		{% csrf_token %}
 	</form>
 	{% for ignore in ignores %}
-        <center>YOU BLOCKED {{ ignore.whom.username }} with id {{ ignore.whom.id }}</center></br>
-    {% endfor %}
+        <center>YOU BLOCKED PERSON WITH ID {{ ignore.whom }}</center></br>
+	{% endfor %}
 {% endblock %}
