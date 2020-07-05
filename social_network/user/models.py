@@ -1,5 +1,6 @@
 import datetime
 import os
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.db import models
@@ -41,6 +42,6 @@ class Record(models.Model):
 
 class Photo(models.Model):
 	def correct_dir(self, filename):
-		return '/mnt/c/Django/DjangoSocialNetwork/social_network/user/static/user/{0}/photos/{1}'.format(self.author.id, filename)
+		return '{}{}/photos/{}'.format(settings.MEDIA_ROOT, self.author.id, filename)
 	author = models.ForeignKey(User, on_delete=models.CASCADE)
-	photo = models.ImageField(upload_to=correct_dir)
+	photo = models.ImageField(upload_to=correct_dir, max_length=2048)

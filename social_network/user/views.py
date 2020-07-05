@@ -1,4 +1,5 @@
 from .serializers import *
+from django.conf import settings
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -55,7 +56,7 @@ class Photo(ListCreateAPIView):
         response = super().get(request, *args, **kwargs)
         data = []
         for i in response.data:
-            data.append({'photo': i['photo'].replace('/mnt/c/Django/DjangoSocialNetwork/social_network/user/static/user', '')})
+            data.append({'photo': i['photo'].replace(settings.MEDIA_ROOT[:-1], '')})
         response.data = data
         response.data.append({'Authorization': True if kwargs['author_id'] == request.user.id else False})
         return response

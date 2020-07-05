@@ -15,7 +15,8 @@ class Admission(CreateAPIView):
             data = request.data
             system = False
         try:
-            if (user := authenticate(email=data['email'], password=data['password'], system=system)) is None:
+            user = authenticate(email=data['email'], password=data['password'], system=system)
+            if user is None:
                 return Response()
         except:
             return Response()

@@ -1,3 +1,4 @@
+env
 photos/
 */__pycache__
 *.pyc
