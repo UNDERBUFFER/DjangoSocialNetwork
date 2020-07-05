@@ -1,11 +1,13 @@
 # DjangoSocialNetwork
 Social network on Pyhon/Django 
+==============================
 
-1. git clone https://github.com/DolphinHMPY/DjangoSocialNetwork.git
-2. you should change the paths for yourself:
-    ./DjangoSocialNetwork/social_network/social_network/settings.py - MEDIA_ROOT = ...
-    ./DjangoSocialNetwork/social_network/user/models.py - Photo.correct_dir() -> ...
-    ./DjangoSocialNetwork/social_network/user/views.py Photo.get .replace(...)
-3. python ./DjangoSocialNetwork/social_network/manage.py migrate
-4. python ./DjangoSocialNetwork/social_network/manage.py runserver 8080
-5. python ./DjangoSocialNetwork/web_app/manage.py runserver 8000
+* `git clone https://github.com/DolphinHMPY/DjangoSocialNetwork.git`
+* `cd DjangoSocialNetwork`
+* add `env`
+    * `python3 -m venv env`
+    * `source env/bin/activate`
+    * `pip install -r requirements.txt`
+* `python ./social_network/manage.py migrate`
+* `python ./social_network/manage.py runserver 8080`
+* `python ./web_app/manage.py runserver 8000`
