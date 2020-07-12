@@ -11,3 +11,7 @@ Social network on Pyhon/Django
 * `python ./social_network/manage.py migrate`
 * `python ./social_network/manage.py runserver 8080`
 * `python ./web_app/manage.py runserver 8000`
+
+docker
+------
+* `docker build -t python-django -f Dockerfile .`
