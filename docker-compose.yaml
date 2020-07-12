@@ -5,7 +5,7 @@ services:
   web_app:
     image: python-django
     volumes:
-      - web_app/:/app
+      - ./web_app/:/app
     environment:
       REST_API_HOST: rest_api:8080
     ports:
@@ -15,7 +15,7 @@ services:
   rest_api:
     image: python-django
     volumes:
-      - social_network/:/app
+      - ./social_network/:/app
     environment:
       DATABASE_CONNECTION_STRING: postgres://postgres:toor@db:5432/social_network
     # ports:
@@ -26,7 +26,8 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: toor
+      POSTGRES_USER: postgres
+      POSTGRES_DB: social_network
     # ports:
     #   - 5432:5432

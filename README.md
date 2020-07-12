@@ -2,6 +2,9 @@
 Social network on Pyhon/Django 
 ==============================
 
+local launch
+------------
+
 * `git clone https://github.com/DolphinHMPY/DjangoSocialNetwork.git`
 * `cd DjangoSocialNetwork`
 * add `env`
@@ -14,4 +17,7 @@ Social network on Pyhon/Django
 
 docker
 ------
+
 * `docker build -t python-django -f Dockerfile .`
+* `docker-compose up`
+* `docker exec -it djangosocialnetwork_rest_api_1 /bin/sh -с  'python manage.py migrate'`

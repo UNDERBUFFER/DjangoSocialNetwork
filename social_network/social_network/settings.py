@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from urllib.parse import urlparse
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -82,13 +83,27 @@ WSGI_APPLICATION = 'social_network.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
+DATABASE_CONNECTION_STRING = os.getenv('DATABASE_CONNECTION_STRING', None)
+
+if DATABASE_CONNECTION_STRING:
+    connection = urlparse(DATABASE_CONNECTION_STRING)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': connection.path[1:],
+            'USER' : connection.username,
+            'PASSWORD' : connection.password,
+            'HOST' : connection.hostname,
+            'PORT' : connection.port,
+        }
+    }
+else:
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
