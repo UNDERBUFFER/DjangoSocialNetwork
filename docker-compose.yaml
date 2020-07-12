@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+
+  # webapp:
+  #   image: python-django
+  #   volumes:
+  #     - ./web_app/:/app
+  #   environment:
+  #     REST_API_HOST: restapi:8080
+  #   ports:
+  #     - 8000:8000
+  #   command: python manage.py runserver 0.0.0.0:8000
+
+  restapi:
+    image: python-django
+    volumes:
+      - ./social_network/:/app
+    environment:
+      DATABASE_CONNECTION_STRING: postgres://postgres:toor@db:5432/social_network
+    ports:
+      - 8080:8080
+    command: python manage.py runserver 0.0.0.0:8080
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: toor
+      POSTGRES_USER: postgres
+      POSTGRES_DB: social_network
+    # ports:
+    #   - 5432:5432
