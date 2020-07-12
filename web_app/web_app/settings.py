@@ -137,3 +137,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
+REST_API_HOST = os.getenv('REST_API_HOST', 'localhost:8080')
