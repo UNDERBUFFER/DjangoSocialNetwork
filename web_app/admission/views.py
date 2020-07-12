@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 def registration(request):
+	print('http://{}/admission/registration'.format(settings.REST_API_HOST))
 	return auth_request(request, 'http://{}/admission/registration'.format(settings.REST_API_HOST), request.POST, 'admission/registration.html')
 
 def entrance(request):

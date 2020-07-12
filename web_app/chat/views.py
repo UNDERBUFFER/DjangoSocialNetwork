@@ -9,7 +9,7 @@ class Message(View):
     def get(self, request, *args, **kwargs):
         res = access_request(request, 'http://{}/chat/chat'.format(settings.REST_API_HOST))
         if res is False:
-            return redirect('http://{}/admission/entrance'.format(settings.REST_API_HOST))
+            return redirect('http://localhost:8000/admission/entrance')
         return render(request, 'chat/chat.html', context={'data': [{j: i[j] for j in i} for i in res[1]]})
     def post(self, request, *args, **kwargs):
         res = access_request(request, 'http://{}/chat/chat'.format(settings.REST_API_HOST))
@@ -23,7 +23,7 @@ class Ignore(View):
     def get(self, request, *args, **kwargs):
         res = access_request(request, 'http://{}/chat/ignore'.format(settings.REST_API_HOST))
         if res is False:
-            return redirect('http://{}/admission/entrance'.format(settings.REST_API_HOST))
+            return redirect('http://localhost:8000/admission/entrance')
         return render(request, 'chat/ignore.html', context={'ignores': [{j: i[j] for j in i} for i in res[1]]})
     def post(self, request, *args, **kwargs):
         res = access_request(request, 'http://{}/chat/ignore'.format(settings.REST_API_HOST))
