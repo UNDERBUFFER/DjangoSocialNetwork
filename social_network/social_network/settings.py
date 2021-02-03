@@ -89,17 +89,17 @@ if DATABASE_CONNECTION_STRING:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': connection.path[1:],
-            'USER' : connection.username,
-            'PASSWORD' : connection.password,
-            'HOST' : connection.hostname,
-            'PORT' : connection.port,
+            'USER': connection.username,
+            'PASSWORD': connection.password,
+            'HOST': connection.hostname,
+            'PORT': connection.port,
         }
     }
 else:
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 

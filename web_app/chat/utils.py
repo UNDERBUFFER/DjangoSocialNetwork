@@ -3,6 +3,7 @@ import requests
 from django.shortcuts import redirect, render
 from user.utils import AccessException
 
+
 def access_request(request, url):
     session = requests.session()
     token = request.COOKIES.get('Authorization', '')
